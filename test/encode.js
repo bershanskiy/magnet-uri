@@ -30,7 +30,9 @@ test('encode: simple magnet uri using convenience names', t => {
     dn: 'Leaves of Grass by Walt Whitman.epub',
     name: 'Leaves of Grass by Walt Whitman.epub',
     infoHash: 'd2474e86c95b19b8bcfdb92bc12c9d44667cfa36',
+    infoHashV1: 'd2474e86c95b19b8bcfdb92bc12c9d44667cfa36',
     infoHashBuffer: Buffer.from('d2474e86c95b19b8bcfdb92bc12c9d44667cfa36', 'hex'),
+    infoHashV1Buffer: Buffer.from('d2474e86c95b19b8bcfdb92bc12c9d44667cfa36', 'hex'),
     tr: [
       'udp://tracker.example1.com:1337',
       'udp://tracker.example2.com:80',
@@ -71,7 +73,9 @@ test('encode: using infoHashBuffer', t => {
   t.equal(result, 'magnet:?xt=urn:btih:d2474e86c95b19b8bcfdb92bc12c9d44667cfa36')
   t.deepEqual(magnet.decode(result), {
     infoHashBuffer: Buffer.from('d2474e86c95b19b8bcfdb92bc12c9d44667cfa36', 'hex'),
+    infoHashV1Buffer: Buffer.from('d2474e86c95b19b8bcfdb92bc12c9d44667cfa36', 'hex'),
     infoHash: 'd2474e86c95b19b8bcfdb92bc12c9d44667cfa36',
+    infoHashV1: 'd2474e86c95b19b8bcfdb92bc12c9d44667cfa36',
     xt: 'urn:btih:d2474e86c95b19b8bcfdb92bc12c9d44667cfa36',
     urlList: [],
     announce: [],
@@ -91,7 +95,9 @@ test('encode: select-only', t => {
   t.deepEqual(magnet.decode(result), {
     xt: 'urn:btih:d2474e86c95b19b8bcfdb92bc12c9d44667cfa36',
     infoHash: 'd2474e86c95b19b8bcfdb92bc12c9d44667cfa36',
+    infoHashV1: 'd2474e86c95b19b8bcfdb92bc12c9d44667cfa36',
     infoHashBuffer: Buffer.from('d2474e86c95b19b8bcfdb92bc12c9d44667cfa36', 'hex'),
+    infoHashV1Buffer: Buffer.from('d2474e86c95b19b8bcfdb92bc12c9d44667cfa36', 'hex'),
     urlList: [],
     announce: [],
     peerAddresses: [],
@@ -112,7 +118,9 @@ test('encode: peer-address single value', t => {
     xt: 'urn:btih:d2474e86c95b19b8bcfdb92bc12c9d44667cfa36',
     'x.pe': '123.213.32.10:47450',
     infoHash: 'd2474e86c95b19b8bcfdb92bc12c9d44667cfa36',
+    infoHashV1: 'd2474e86c95b19b8bcfdb92bc12c9d44667cfa36',
     infoHashBuffer: Buffer.from('d2474e86c95b19b8bcfdb92bc12c9d44667cfa36', 'hex'),
+    infoHashV1Buffer: Buffer.from('d2474e86c95b19b8bcfdb92bc12c9d44667cfa36', 'hex'),
     urlList: [],
     announce: [],
     peerAddresses: ['123.213.32.10:47450']
@@ -131,7 +139,9 @@ test('encode: peer-address multiple values', t => {
     xt: 'urn:btih:d2474e86c95b19b8bcfdb92bc12c9d44667cfa36',
     'x.pe': ['123.213.32.10:47450', '[2001:db8::2]:55013'],
     infoHash: 'd2474e86c95b19b8bcfdb92bc12c9d44667cfa36',
+    infoHashV1: 'd2474e86c95b19b8bcfdb92bc12c9d44667cfa36',
     infoHashBuffer: Buffer.from('d2474e86c95b19b8bcfdb92bc12c9d44667cfa36', 'hex'),
+    infoHashV1Buffer: Buffer.from('d2474e86c95b19b8bcfdb92bc12c9d44667cfa36', 'hex'),
     urlList: [],
     announce: [],
     peerAddresses: ['123.213.32.10:47450', '[2001:db8::2]:55013']
