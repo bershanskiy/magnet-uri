@@ -67,10 +67,10 @@ function magnetURIDecode (uri) {
     const xts = Array.isArray(result.xt) ? result.xt : [result.xt]
     xts.forEach(xt => {
       if ((m = xt.match(/^urn:btih:(.{40})/))) {
-        result.infoHashV1 = m[1].toLowerCase()
+        result.infoHash = m[1].toLowerCase()
       } else if ((m = xt.match(/^urn:btih:(.{32})/))) {
         const decodedStr = base32.decode(m[1])
-        result.infoHashV1 = Buffer.from(decodedStr, 'binary').toString('hex')
+        result.infoHash = Buffer.from(decodedStr, 'binary').toString('hex')
       } else if ((m = xt.match(/^urn:btmh:1220(.{64})/))) {
         result.infoHashV2 = m[1].toLowerCase()
       }
@@ -86,7 +86,7 @@ function magnetURIDecode (uri) {
     })
   }
 
-  if (result.infoHashV1) result.infoHashV1Buffer = Buffer.from(result.infoHashV1, 'hex')
+  if (result.infoHash) result.infoHashBuffer = Buffer.from(result.infoHash, 'hex')
   if (result.infoHashV2) result.infoHashV2Buffer = Buffer.from(result.infoHashV2, 'hex')
   if (result.publicKey) result.publicKeyBuffer = Buffer.from(result.publicKey, 'hex')
 
@@ -116,10 +116,6 @@ function magnetURIDecode (uri) {
   result.urlList = Array.from(new Set(result.urlList))
   result.peerAddresses = Array.from(new Set(result.peerAddresses))
 
-  // support old name
-  if (result.infoHashV1) result.infoHash = result.infoHashV1
-  if (result.infoHashV1Buffer) result.infoHashBuffer = result.infoHashV1Buffer
-
   return result
 }
 
@@ -131,13 +127,12 @@ function magnetURIEncode (obj) {
 
   // Deduplicate xt by using a set
   let xts = new Set()
-  console.log('Orig XT', obj.xt)
   if (obj.xt && typeof obj.xt === 'string') xts.add(obj.xt)
   if (obj.xt && typeof obj.xt === 'object') xts = new Set(obj.xt)
   if (obj.infoHashBuffer) xts.add(`urn:btih:${obj.infoHashBuffer.toString('hex')}`)
   if (obj.infoHash) xts.add(`urn:btih:${obj.infoHash.toString('hex')}`)
-  if (obj.infoHashV1Buffer) xts.add(`urn:btih:${obj.infoHashV1Buffer.toString('hex')}`)
-  if (obj.infoHashV1) xts.add(`urn:btih:${obj.infoHashV1}`)
+  if (obj.infoHashBuffer) xts.add(`urn:btih:${obj.infoHashBuffer.toString('hex')}`)
+  if (obj.infoHash) xts.add(`urn:btih:${obj.infoHash}`)
   if (obj.infoHashV2Buffer) xts.add(obj.xt = `urn:btmh:1220${obj.infoHashV2Buffer.toString('hex')}`)
   if (obj.infoHashV2) xts.add(`urn:btmh:1220${obj.infoHashV2}`)
   if (xts.size === 1) obj.xt = Array.from(xts)[0]
