@@ -130,13 +130,12 @@ function magnetURIEncode (obj) {
   if (obj.xt && typeof obj.xt === 'string') xts.add(obj.xt)
   if (obj.xt && typeof obj.xt === 'object') xts = new Set(obj.xt)
   if (obj.infoHashBuffer) xts.add(`urn:btih:${obj.infoHashBuffer.toString('hex')}`)
-  if (obj.infoHash) xts.add(`urn:btih:${obj.infoHash.toString('hex')}`)
-  if (obj.infoHashBuffer) xts.add(`urn:btih:${obj.infoHashBuffer.toString('hex')}`)
   if (obj.infoHash) xts.add(`urn:btih:${obj.infoHash}`)
   if (obj.infoHashV2Buffer) xts.add(obj.xt = `urn:btmh:1220${obj.infoHashV2Buffer.toString('hex')}`)
   if (obj.infoHashV2) xts.add(`urn:btmh:1220${obj.infoHashV2}`)
-  if (xts.size === 1) obj.xt = Array.from(xts)[0]
-  if (xts.size > 1) obj.xt = Array.from(xts)
+  const xtsDeduped = Array.from(xts)
+  if (xtsDeduped.length === 1) obj.xt = xtsDeduped[0]
+  if (xtsDeduped.length > 1) obj.xt = xtsDeduped
 
   if (obj.publicKeyBuffer) obj.xs = `urn:btpk:${obj.publicKeyBuffer.toString('hex')}`
   if (obj.publicKey) obj.xs = `urn:btpk:${obj.publicKey}`
